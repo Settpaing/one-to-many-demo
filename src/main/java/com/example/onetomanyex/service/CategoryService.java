@@ -1,7 +1,7 @@
 package com.example.onetomanyex.service;
 
-import org.springframework.stereotype.Service;
+import com.example.onetomanyex.domain.Category;
 
-@Service
-public class CategoryService {
+public interface CategoryService {
+    Category save(Category category);
 }

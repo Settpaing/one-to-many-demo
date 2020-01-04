@@ -19,4 +19,9 @@ public class Category {
     @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "category_id_fk")
     private List<Product> products = new ArrayList<>();
+
+    public void addProductP(Product product){
+        products.add(product);
+    }
+
 }

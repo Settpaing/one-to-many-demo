@@ -6,16 +6,21 @@ import com.example.onetomanyex.repository.CategoryRepository;
 import com.example.onetomanyex.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class IDatabaseImpl implements IDatabase {
 
-    @Autowired
-    private CategoryRepository categoryRepository;
-    @Autowired
-    private ProductRepository productRepository;
+   private final CategoryRepository categoryRepository;
+   private final ProductRepository productRepository;
+
+    public IDatabaseImpl(CategoryRepository categoryRepository, ProductRepository productRepository) {
+        this.categoryRepository = categoryRepository;
+        this.productRepository = productRepository;
+    }
 
     @Override
+    @Transactional
     public void createDatabase() {
         Category c1 = new Category();
         c1.setName("Fruits");
@@ -27,9 +32,17 @@ public class IDatabaseImpl implements IDatabase {
         Product p3 = new Product("Fish",23,10000);
         Product p4 = new Product("Chicken",23,15000);
 
-        c1.getProducts().add(p1);
-        c1.getProducts().add(p2);
-        c2.getProducts().add(p3);
-        c2.getProducts().add(p4);
+        c1.addProductP(p1);
+        c1.addProductP(p2);
+        c2.addProductP(p3);
+        c2.addProductP(p4);
+
+        categoryRepository.save(c1);
+        categoryRepository.save(c2);
+
+      /*  productRepository.save(p1);
+        productRepository.save(p2);
+        productRepository.save(p3);
+        productRepository.save(p4); */
     }
 }
